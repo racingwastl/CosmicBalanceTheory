@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmic Balance Theory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #07090f;
+    --bg2: #0d1120;
+    --bg3: #121829;
+    --gold: #c8a96e;
+    --gold2: #e8c97e;
+    --text: #e8e4d9;
+    --muted: #8a8478;
+    --border: rgba(200,169,110,0.18);
+    --border2: rgba(200,169,110,0.08);
+    --accent-blue: #4a7fcb;
+    --accent-teal: #2a9d8f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* STARS BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 42% 17%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 63% 44%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 81% 8%, rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 27% 61%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 71% 79%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 88%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 54% 93%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 91% 54%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 35% 40%, rgba(200,169,110,0.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 88% 30%, rgba(200,169,110,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: .8;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -.01em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #e8e4d9 30%, #c8a96e 70%, #e8c97e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    letter-spacing: .03em;
+  }
+
+  .hero-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    margin-bottom: 3rem;
+  }
+
+  .badges {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+
+  .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--gold);
+    background: rgba(200,169,110,.05);
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+
+  .btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .05em;
+    padding: 12px 28px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .25s;
+    border-radius: 2px;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: #07090f;
+    border-color: var(--gold);
+  }
+  .btn-primary:hover { background: var(--gold2); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+  }
+  .btn-outline:hover { background: rgba(200,169,110,.08); border-color: var(--gold); color: var(--gold); }
+
+  /* SECTION */
+  section { padding: 6rem 0; position: relative; z-index: 1; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--gold);
+    opacity: .5;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .section-body {
+    font-size: 16px;
+    color: #b8b4a8;
+    max-width: 640px;
+    line-height: 1.8;
+  }
+
+  /* VIDEO SECTION */
+  .video-section { background: var(--bg2); }
+  .video-section .container { text-align: center; }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 2.5rem auto 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    display: block;
+  }
+
+  .video-placeholder {
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--bg3);
+    color: var(--muted);
+  }
+
+  .video-placeholder .play-icon {
+    width: 64px; height: 64px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: .5;
+  }
+
+  /* INFOGRAPHIC SECTION */
+  .infographic-wrapper {
+    margin-top: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .infographic-wrapper img {
+    width: 100%;
+    display: block;
+  }
+
+  .infographic-caption {
+    padding: 1rem 1.5rem;
+    background: var(--bg2);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .08em;
+    border-top: 1px solid var(--border2);
+  }
+
+  /* AXIOMS */
+  .axioms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 600px) { .axioms-grid { grid-template-columns: 1fr; } }
+
+  .axiom-card {
+    background: var(--bg2);
+    padding: 2rem;
+  }
+
+  .axiom-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .axiom-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: .75rem;
+    color: var(--text);
+  }
+
+  .axiom-body {
+    font-size: 14px;
+    color: #9a9489;
+    line-height: 1.75;
+  }
+
+  .bridge-card {
+    grid-column: 1 / -1;
+    background: var(--bg3);
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .bridge-card .axiom-title { font-size: 1.5rem; }
+  .bridge-formula {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    margin: 1rem 0;
+    letter-spacing: .1em;
+  }
+
+  /* CONSEQUENCES */
+  .consequence-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .consequence-item {
+    background: var(--bg2);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: background .2s;
+  }
+
+  .consequence-item:hover { background: var(--bg3); }
+
+  .consequence-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: .3;
+    line-height: 1;
+  }
+
+  .consequence-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+    color: var(--text);
+  }
+
+  .consequence-body {
+    font-size: 14px;
+    color: #9a9489;
+    line-height: 1.75;
+  }
+
+  .consequence-tag {
+    display: inline-block;
+    margin-top: .75rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid rgba(74,127,203,.3);
+    color: #6a9fcb;
+    background: rgba(74,127,203,.05);
+    border-radius: 2px;
+  }
+
+  /* TABLE */
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+    font-size: 14px;
+  }
+
+  .comparison-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+
+  .comparison-table td {
+    padding: .875rem 1.25rem;
+    border-bottom: 1px solid var(--border2);
+    vertical-align: top;
+    color: #b8b4a8;
+    line-height: 1.5;
+  }
+
+  .comparison-table tr:last-child td { border-bottom: none; }
+  .comparison-table tr:hover td { background: rgba(200,169,110,.03); }
+
+  .comparison-table td:first-child { color: var(--text); font-weight: 500; }
+  .comparison-table td.cbt { color: var(--gold2); }
+
+  .status-pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .status-observed { background: rgba(42,157,143,.1); color: #4ecdc4; border: 1px solid rgba(42,157,143,.3); }
+  .status-falsifiable { background: rgba(200,169,110,.08); color: var(--gold); border: 1px solid var(--border); }
+
+  /* PREDICTIONS */
+  .predictions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+
+  .prediction-card {
+    background: var(--bg2);
+    padding: 1.5rem;
+  }
+
+  .prediction-instrument {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent-teal);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: .75rem;
+    opacity: .8;
+  }
+
+  .prediction-claim {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: .75rem;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .prediction-timeline {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* REFERENCES */
+  .references-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .reference-item {
+    font-size: 13px;
+    color: var(--muted);
+    padding: .625rem 0;
+    border-bottom: 1px solid var(--border2);
+    line-height: 1.5;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .reference-item:last-child { border-bottom: none; }
+
+  /* DOWNLOAD */
+  .download-section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .download-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: .7;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 4rem 0 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border2);
+  }
+
+  footer .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    margin-bottom: .75rem;
+  }
+
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .08em;
+    line-height: 1.8;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0 auto 3rem;
+  }
+
+  /* SCROLL FADE */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SECTION ALT BG */
+  .bg-alt { background: var(--bg2); }
+  .bg-alt2 { background: var(--bg3); }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,9,15,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border2);
+  }
+
+  nav .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: .04em;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  nav ul a {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  nav ul a:hover { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="nav-brand">CBT</a>
+  <ul>
+    <li><a href="#theory">Theory</a></li>
+    <li><a href="#consequences">Consequences</a></li>
+    <li><a href="#predictions">Predictions</a></li>
+    <li><a href="#paper">Paper</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Independent Research · v1.0 · March 2026</div>
+  <h1 class="hero-title">Cosmic Balance<br>Theory</h1>
+  <p class="hero-subtitle">One currency. One sum. Zero.</p>
+  <p class="hero-meta">Sebastian Rölz — Independent Researcher, Germany</p>
+  <div class="badges">
+    <span class="badge">Falsifiable Predictions</span>
+    <span class="badge">Not Peer-Reviewed</span>
+    <span class="badge">Theoretical Model</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#theory" class="btn btn-primary">Explore the Theory</a>
+    <a href="#paper" class="btn btn-outline">Download Paper</a>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section" id="video">
+  <div class="container">
+    <div class="section-label fade-in">Explainer</div>
+    <h2 class="section-title fade-in">Watch the <em>Introduction</em></h2>
+
+    <div class="video-wrapper fade-in">
+      <!-- ============================================================
+           WORDPRESS: Upload your video to Media Library, then replace
+           the src attribute below with the full media URL.
+           Example: src="https://cosmicbalancetheory.wordpress.com/wp-content/uploads/2026/03/Cosmic_Balance_Theory.mp4"
+           ============================================================ -->
+      <video controls preload="metadata" poster="">
+        <source src="REPLACE_WITH_VIDEO_URL" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- INFOGRAPHIC -->
+<section id="infographic">
+  <div class="container">
+    <div class="section-label fade-in">Visual Overview</div>
+    <h2 class="section-title fade-in">The Universe as a <em>Zero-Sum Game</em></h2>
+    <p class="section-body fade-in">A unified model connecting the universe's greatest mysteries through two axioms and three consequences.</p>
+
+    <div class="infographic-wrapper fade-in">
+      <!-- ============================================================
+           WORDPRESS: Upload your infographic to Media Library, then replace
+           src with the full media URL.
+           Example: src="https://cosmicbalancetheory.wordpress.com/wp-content/uploads/2026/03/Cosmic_Balance_Theory.png"
+           ============================================================ -->
+      <img src="REPLACE_WITH_INFOGRAPHIC_URL" alt="Cosmic Balance Theory — The Universe as a Zero-Sum Game. Infographic showing two axioms, conservation bridge, and three consequences: dark matter as primordial black holes, hidden antimatter, and dark energy as geometry.">
+      <div class="infographic-caption">Fig. 1 — The Universe as a Zero-Sum Game: Understanding Cosmic Balance Theory (CBT) · cosmicbalancetheory.wordpress.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- THEORY -->
+<section class="bg-alt" id="theory">
+  <div class="container">
+    <div class="section-label fade-in">Foundation</div>
+    <h2 class="section-title fade-in">Two Axioms<br>& a <em>Bridge</em></h2>
+    <p class="section-body fade-in">The CBT rests on two foundational axioms connected by the conservation of energy. From this minimal foundation, three major consequences follow — each addressing one of cosmology's greatest open problems.</p>
+
+    <div class="axioms-grid fade-in">
+      <div class="axiom-card">
+        <div class="axiom-num">Axiom I</div>
+        <div class="axiom-title">Mass Is Energy</div>
+        <p class="axiom-body">There are no fundamentally different kinds of matter. There is only energy in different states. The 5 / 27 / 68 partition of the standard model is a classification by our measurement capability — not by physics.</p>
+      </div>
+      <div class="axiom-card">
+        <div class="axiom-num">Axiom II</div>
+        <div class="axiom-title">The Sum Is Zero</div>
+        <p class="axiom-body">The cosmos is a zero-sum game. Positive energy (mass, radiation) is exactly compensated by negative energy (gravity). The zero-sum principle extends to all conserved quantum numbers.</p>
+      </div>
+      <div class="bridge-card">
+        <div class="axiom-num">Bridge — Conservation of Energy</div>
+        <div class="bridge-formula">+1 − 1 = 0</div>
+        <p class="axiom-body" style="max-width:520px;margin:0 auto;">Because there is only one currency — energy — a total sum can be formed. In a closed system, that sum is conserved. CBT postulates: this sum is exactly zero.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSEQUENCES -->
+<section id="consequences">
+  <div class="container">
+    <div class="section-label fade-in">Three Consequences</div>
+    <h2 class="section-title fade-in">What the Axioms<br><em>Demand</em></h2>
+    <p class="section-body fade-in">Three long-standing problems of cosmology are resolved — not by adding new particles or fields, but by reinterpreting what we already observe.</p>
+
+    <div class="consequence-list fade-in">
+      <div class="consequence-item">
+        <div class="consequence-num">1</div>
+        <div>
+          <div class="consequence-title">Dark Matter Is Collapsed Energy</div>
+          <p class="consequence-body">Black holes are gravitationally blind to their content (no-hair theorem). CBT identifies dark matter as primordial black holes (PBHs) — collapsed energy from the early universe in the mass range 10¹⁴ to 10¹⁹ kg (asteroid to lunar mass). This window remains largely open as of 2026, and PBHs can account for all of dark matter. After over 30 years of null results in direct WIMP searches, non-particle DM candidates gain significant plausibility.</p>
+          <span class="consequence-tag">Collapsed Energy · PBHs · No New Particles</span>
+        </div>
+      </div>
+      <div class="consequence-item">
+        <div class="consequence-num">2</div>
+        <div>
+          <div class="consequence-title">Antimatter Is Hidden, Not Gone</div>
+          <p class="consequence-body">The apparent baryon asymmetry (η ≈ 6×10⁻¹⁰) is not a fundamental puzzle. Before PBH formation, the net baryon number was zero. Regions with a slight antimatter excess were statistically correlated with overdensities and preferentially collapsed into PBHs. After collapse, baryon number is hidden — but the corresponding positive baryon number remains as free matter. The ALPHA-g experiment (CERN, 2023) confirms antimatter falls like matter. What distinguishes is the state: collapsed or free.</p>
+          <span class="consequence-tag">B = 0 · Sakharov Conditions Circumvented</span>
+        </div>
+      </div>
+      <div class="consequence-item">
+        <div class="consequence-num">3</div>
+        <div>
+          <div class="consequence-title">Dark Energy Is Geometry</div>
+          <p class="consequence-body">Dark energy is not a third substance alongside matter and radiation. It is the geometric consequence of the universe being flat (Ω_total = 1, confirmed by Planck) — because it is a zero-sum game. The 68% attributed to "dark energy" is the difference that brings the total sum to zero. This reinterpretation also addresses the coincidence problem and the flatness problem: flatness is not a dynamical result but a logical requirement of the zero-sum axiom.</p>
+          <span class="consequence-tag">Geometric Zero Sum · Ω = 1 · No New Substance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="bg-alt" id="comparison">
+  <div class="container">
+    <div class="section-label fade-in">Entity Comparison</div>
+    <h2 class="section-title fade-in">Standard Model<br><em>vs.</em> CBT</h2>
+
+    <div style="overflow-x:auto;" class="fade-in">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Fraction</th>
+            <th>Standard Model</th>
+            <th>CBT Interpretation</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Visible Matter</td>
+            <td>5%</td>
+            <td>Detected particles</td>
+            <td class="cbt">Free energy in a detectable state</td>
+            <td><span class="status-pill status-observed">Observed</span></td>
+          </tr>
+          <tr>
+            <td>Dark Matter</td>
+            <td>27%</td>
+            <td>Unknown particles (WIMPs)</td>
+            <td class="cbt">Collapsed energy — Primordial Black Holes</td>
+            <td><span class="status-pill status-falsifiable">Falsifiable</span></td>
+          </tr>
+          <tr>
+            <td>Dark Energy</td>
+            <td>68%</td>
+            <td>Unknown energy / substance</td>
+            <td class="cbt">Geometric null-sum consequence</td>
+            <td><span class="status-pill status-observed">Consistent with Ω = 1</span></td>
+          </tr>
+          <tr>
+            <td>Baryon Asymmetry</td>
+            <td>—</td>
+            <td>Fundamental puzzle (η ≈ 6×10⁻¹⁰)</td>
+            <td class="cbt">Observational artifact — B = 0</td>
+            <td><span class="status-pill status-falsifiable">Falsifiable</span></td>
+          </tr>
+          <tr>
+            <td style="font-weight:400; color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size:1rem; font-style:italic;">Total</td>
+            <td>100%</td>
+            <td>Three separate unknowns</td>
+            <td class="cbt">One process: Energy = 0</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PREDICTIONS -->
+<section id="predictions">
+  <div class="container">
+    <div class="section-label fade-in">Falsifiability</div>
+    <h2 class="section-title fade-in">How CBT Can<br>Be <em>Refuted</em></h2>
+    <p class="section-body fade-in">A theory is scientific only if it is falsifiable. CBT makes specific, testable predictions that distinguish it from ΛCDM. The instruments that can perform these tests exist or are being built.</p>
+
+    <div class="predictions-grid fade-in">
+      <div class="prediction-card">
+        <div class="prediction-instrument">Microlensing · GW · LISA</div>
+        <div class="prediction-claim">PBHs at 10¹⁴–10¹⁹ kg account for all of dark matter</div>
+        <div class="prediction-timeline">Roman · Subaru · Einstein Telescope · 5–15 years</div>
+      </div>
+      <div class="prediction-card">
+        <div class="prediction-instrument">LIGO / Virgo / KAGRA</div>
+        <div class="prediction-claim">Sub-solar black holes without stellar formation regions</div>
+        <div class="prediction-timeline">Now — S251112cm (Nov 2025) is consistent</div>
+      </div>
+      <div class="prediction-card">
+        <div class="prediction-instrument">CMB Isocurvature Modes</div>
+        <div class="prediction-claim">Net baryon number B = 0 globally</div>
+        <div class="prediction-timeline">LiteBIRD · CMB-S4 · ~2032–2035</div>
+      </div>
+      <div class="prediction-card">
+        <div class="prediction-instrument">LISA · Stochastic GW</div>
+        <div class="prediction-claim">GW background at ~mHz from inflationary peak</div>
+        <div class="prediction-timeline">~2035</div>
+      </div>
+      <div class="prediction-card">
+        <div class="prediction-instrument">Theoretical</div>
+        <div class="prediction-claim">Ω_DM / Ω_b = 5.4 follows from one mechanism</div>
+        <div class="prediction-timeline">Open — calculation for the community</div>
+      </div>
+      <div class="prediction-card" style="background: rgba(200,169,110,.04); border-left: 2px solid var(--gold);">
+        <div class="prediction-instrument" style="color: #e05555;">Falsification Criteria</div>
+        <div class="prediction-claim">No PBH signature by ~2040 → Consequence 1 refuted. Large CMB isocurvature modes → Consequence 2 refuted.</div>
+        <div class="prediction-timeline">Hard deadline</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAPER + DOWNLOAD -->
+<section class="bg-alt" id="paper">
+  <div class="container">
+    <div class="section-label fade-in">Publication</div>
+    <h2 class="section-title fade-in">Read the <em>Full Paper</em></h2>
+    <p class="section-body fade-in">The complete theoretical framework including formal axioms, derivations, open tasks for theoretical physics, and full reference list.</p>
+
+    <div class="download-section fade-in">
+      <div class="download-icon">⬇</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-bottom:.5rem; color:var(--text);">Cosmic Balance Theory — v1.0</div>
+      <div style="font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:1.5rem; letter-spacing:.1em;">Sebastian Rölz · March 2026 · Theoretical Model · Not Peer-Reviewed</div>
+      <!-- ============================================================
+           WORDPRESS: Upload CBT_v1_0_EN.pdf to Media Library, replace href below.
+           ============================================================ -->
+      <a href="REPLACE_WITH_PDF_URL" class="btn btn-primary" download>Download PDF</a>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="references">
+  <div class="container">
+    <div class="section-label fade-in">Literature</div>
+    <h2 class="section-title fade-in">Selected <em>References</em></h2>
+
+    <div class="references-list fade-in">
+      <div class="reference-item">Carr, B. et al. (2021): Constraints on primordial black holes. Rep. Prog. Phys. 84, 116902.</div>
+      <div class="reference-item">Green, A.M. & Kavanagh, B.J. (2021): Primordial Black Holes as a dark matter candidate. J. Phys. G 48, 043001.</div>
+      <div class="reference-item">Gorton, N.J. & Green, A.M. (2024): How open is the asteroid-mass PBH window? SciPost Phys. 17, 032.</div>
+      <div class="reference-item">ALPHA Collaboration (2023): Observation of the effect of gravity on antimatter. Nature 621, 716.</div>
+      <div class="reference-item">Tryon, E.P. (1973): Is the Universe a Vacuum Fluctuation? Nature 246, 396.</div>
+      <div class="reference-item">Guth, A.H. (1981): Inflationary universe. Phys. Rev. D 23, 347.</div>
+      <div class="reference-item">Planck Collaboration (2020): Planck 2018 results. VI. Cosmological parameters. A&A 641, A6.</div>
+      <div class="reference-item">DESI Collaboration (2025): DR2 Results II: BAO and cosmological constraints. arXiv:2503.14738.</div>
+      <div class="reference-item">García-Bellido, J. et al. (2020): Primordial black holes and the origin of the matter–antimatter asymmetry. Phil. Trans. R. Soc. A 378, 20190091.</div>
+      <div class="reference-item">LZ Collaboration (2025): Dark matter search results from 4.2 tonne-years. Phys. Rev. Lett. 135, 011802.</div>
+      <div class="reference-item">Magaraggia, A. & Cappelluti, N. (2026): Implications for PBH DM from S251112cm. arXiv:2602.21295.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="logo">Cosmic Balance Theory</div>
+    <p>Sebastian Rölz · Independent Researcher · Germany<br>
+    v1.0 · March 2026 · Theoretical model, not peer-reviewed<br>
+    cosmicbalancetheory.wordpress.com</p>
+  </div>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.fade-in');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
